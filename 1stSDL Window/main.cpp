@@ -1,8 +1,12 @@
+
 #include "SDL.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
+#include <iostream>
+
+using namespace std;
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -50,10 +54,10 @@ bool loadMedia() {
 	bool success = true;
 
 	//Load splash image
-	gHelloWorld = SDL_LoadBMP("C:/Users/jstormont0832/source/repos/1stSDL Window/hello_world.bmp");
+	gHelloWorld = SDL_LoadBMP("hello_world.bmp");
 	if (gHelloWorld == NULL)
 	{
-		printf("Unable to load image %s! SDL Error: %s\n", "C:/Users/jstormont0832/source/repos/1stSDL Window/hello_world.bmp", SDL_GetError());
+		printf("Unable to load image %s! SDL Error: %s\n", "hello_world.bmp", SDL_GetError());
 		success = false;
 	}
 
@@ -63,10 +67,10 @@ bool loadMedia() {
 bool loadMedia2() {
 	bool success = true;
 	//Load 2nd splash image
-	gHelloWorld = SDL_LoadBMP("C:/Users/jstormont0832/source/repos/1stSDL Window/POOTIS.bmp");
+	gHelloWorld = SDL_LoadBMP("POOTIS.bmp");
 	if (gHelloWorld == NULL)
 	{
-		printf("Unable to load image %s! SDL Error: %s\n", "C:/Users/jstormont0832/source/repos/1stSDL Window/POOTIS.bmp", SDL_GetError());
+		printf("Unable to load image %s! SDL Error: %s\n", "POOTIS.bmp", SDL_GetError());
 		success = false;
 	}
 	return success;
@@ -102,19 +106,17 @@ int main(int argc, char* args[]) {
 		}
 		else
 		{
-			//Apply the image
-			SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
+			int tfmenu;
+			cout << "Please select a class" << endl << " " << endl << "1 - Scout" << endl << "2 - Soldier" << endl << "3 - Pyro" << endl << "4 - Demoman" << endl << "5 - Heavy" << endl << "6 - Engineer" << endl << "7 - Medic" << endl << "8 - Sniper" << endl << "Spy" << endl;
+			cin >> tfmenu;
 
-			//Update the surface
-			SDL_UpdateWindowSurface(gWindow);
-
-			//Wait two seconds
-			SDL_Delay(2000);
 
 			//Deallocate surface & Change Image
 			SDL_FreeSurface(gHelloWorld);
 			gHelloWorld = NULL;
-			gHelloWorld = SDL_LoadBMP("C:/Users/jstormont0832/source/repos/1stSDL Window/POOTIS.bmp");
+			if (tfmenu == 5) {
+				gHelloWorld = SDL_LoadBMP("POOTIS.bmp");
+			}
 
 			//Apply the new image
 			SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
@@ -123,11 +125,18 @@ int main(int argc, char* args[]) {
 			SDL_UpdateWindowSurface(gWindow);
 
 			//Play Sound
-			PlaySound("C:\\Users\\jstormont0832\\source\\repos\\1stSDL Window\\defopoot.wav", NULL, SND_FILENAME);
+			if (tfmenu == 5) {
+				PlaySound("defopoot.wav", NULL, SND_FILENAME);
+			}
+			else if (tfmenu == 4) {
+				PlaySound("When DeadFace queues as Demoman.wav", NULL, SND_FILENAME);
+			}
 		}
 	}
 	//Free resources and close SDL
 	close();
-
+	
+	
+	
 	return 0;
 }
